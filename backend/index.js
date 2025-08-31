@@ -1,17 +1,23 @@
 const express = require('express');
-//const UserRouter = require('./routers/userRouter');
+const feesRouter = require('./Routes/feeRoutes');
+const registrationRouter = require('./Routes/registrationRoutes');
 const cors = require('cors');
+const { use } = require('react');
 const app = express();
 
 const port =5000;
 
 //mildwares
 app.use(cors({
- // origin: ['http://localhost:3000']
+  origin: ['http://localhost:3000']
 }));
 
+// to parse incoming requests with JSON payloads
 app.use(express.json()); // to parse JSON bodies
-//app.use('/user', UserRouter);
+app.use('/fee', feesRouter);
+app.use('/registration', registrationRouter);
+app.use('/user',userRouter);
+
 // Connect to MongoDB
 // require('./connection');
 
