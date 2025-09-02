@@ -1,11 +1,11 @@
 const express = require('express');
 const feesRouter = require('./Routes/feeRoutes');
 const registrationRouter = require('./Routes/registrationRoutes');
+const userRouter = require('./Routes/userRouter');
 const cors = require('cors');
-const { use } = require('react');
 const app = express();
 
-const port =5000;
+const port = 5000;
 
 //mildwares
 app.use(cors({
@@ -16,7 +16,7 @@ app.use(cors({
 app.use(express.json()); // to parse JSON bodies
 app.use('/fee', feesRouter);
 app.use('/registration', registrationRouter);
-app.use('/user',userRouter);
+app.use('/user', userRouter);
 
 // Connect to MongoDB
 // require('./connection');
