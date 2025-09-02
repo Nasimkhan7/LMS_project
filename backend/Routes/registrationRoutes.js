@@ -5,7 +5,34 @@ const Registration = require('../models/registrationModel');
 // Create a new registration
 router.post('/', async (req, res) => {
     try {
-        const registration = new Registration(req.body);
+        const {
+            firstName,
+            lastName,
+            dateOfBirth,
+            gender,
+            email,
+            phone,
+            address,
+            parentName,
+            parentContact,
+            grade,
+            // registrationDate and status are optional
+        } = req.body;
+
+        const registration = new Registration({
+            firstName,
+            lastName,
+            dateOfBirth,
+            gender,
+            email,
+            phone,
+            address,
+            parentName,
+            parentContact,
+            grade,
+            // registrationDate and status will be set by default
+        });
+
         await registration.save();
         res.status(201).json(registration);
     } catch (error) {

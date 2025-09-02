@@ -19,8 +19,7 @@ const initialState = {
   parentName: "",
   parentContact: "",
   grade: "",
-  className: "",
-  fixedFee: "",
+  // registrationDate and status are optional, usually set by backend
 };
 
 const validationSchema = Yup.object({
@@ -39,8 +38,6 @@ const validationSchema = Yup.object({
   parentName: Yup.string().required("Required"),
   parentContact: Yup.string().required("Required"),
   grade: Yup.string().required("Required"),
-  className: Yup.string().required("Required"),
-  fixedFee: Yup.number().min(0, "Fee must be positive").required("Required"),
 });
 
 export default function RegisterStudent() {
@@ -72,7 +69,7 @@ export default function RegisterStudent() {
       });
       if (photo) formData.append("photo", photo);
 
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/registration/`, {
         method: "POST",
         body: formData,
       });
