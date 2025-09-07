@@ -21,7 +21,6 @@ app.use('/user', userRouter);
 // Connect to MongoDB
 // require('./connection');
 
-
 //routers
 // app.get('/', (req, res) => {
 //     res.send('response from express server');
@@ -30,9 +29,6 @@ app.use('/user', userRouter);
 // app.get('/add',(req, res) =>{
 //     res.send(`resonse from add`);
 // });
-
-
-
 
 
 // starting the  server
