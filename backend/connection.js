@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const url = 'mongodb+srv://d-nexus:nasimkhannk@cluster0.jgytlao.mongodb.net/lms?retryWrites=true&w=majority&appName=Cluster0';
+const url = 'mongodb+srv://d-nexus:lms123@cluster0.jgytlao.mongodb.net/lms?retryWrites=true&w=majority&appName=Cluster0';
 // asynchronous function - return promise OBJECT
 mongoose.connect(url)
 
