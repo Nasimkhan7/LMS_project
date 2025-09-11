@@ -47,21 +47,30 @@ const Home = () => {
           <div className="max-w-5xl mx-auto px-4">
             <h2 className="text-3xl font-bold text-center text-blue-700 dark:text-yellow-400 mb-10">Our Services</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="bg-white dark:bg-gray-900 rounded-lg shadow p-8 flex flex-col items-center transition">
+              <a
+                href="/student-dashboard"
+                className="bg-white dark:bg-gray-900 rounded-lg shadow p-8 flex flex-col items-center transition cursor-pointer hover:scale-105"
+              >
                 <span className="text-blue-600 dark:text-yellow-400 text-4xl mb-4">🎓</span>
                 <h3 className="font-bold text-xl mb-2 text-blue-700 dark:text-yellow-400">Student Portal</h3>
                 <p className="text-gray-600 dark:text-gray-300 text-center">View syllabus, attendance, notices, and more.</p>
-              </div>
-              <div className="bg-white dark:bg-gray-900 rounded-lg shadow p-8 flex flex-col items-center transition">
+              </a>
+              <a
+                href="/admin"
+                className="bg-white dark:bg-gray-900 rounded-lg shadow p-8 flex flex-col items-center transition cursor-pointer hover:scale-105"
+              >
                 <span className="text-green-600 dark:text-green-400 text-4xl mb-4">👩‍🏫</span>
                 <h3 className="font-bold text-xl mb-2 text-green-700 dark:text-green-400">Admin Portal</h3>
                 <p className="text-gray-600 dark:text-gray-300 text-center">Manage students, teachers, classes, and reports.</p>
-              </div>
-              <div className="bg-white dark:bg-gray-900 rounded-lg shadow p-8 flex flex-col items-center transition">
+              </a>
+              <a
+                href="/super-admin"
+                className="bg-white dark:bg-gray-900 rounded-lg shadow p-8 flex flex-col items-center transition cursor-pointer hover:scale-105"
+              >
                 <span className="text-purple-600 dark:text-purple-400 text-4xl mb-4">🛡️</span>
                 <h3 className="font-bold text-xl mb-2 text-purple-700 dark:text-purple-400">Super Admin</h3>
                 <p className="text-gray-600 dark:text-gray-300 text-center">Control all features and permissions.</p>
-              </div>
+              </a>
             </div>
           </div>
         </section>
