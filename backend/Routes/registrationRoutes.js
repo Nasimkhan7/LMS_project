@@ -4,6 +4,8 @@ const Registration = require('../models/registrationModel');
 
 // Create a new registration
 router.post('/', async (req, res) => {
+    console.log(req.body);
+    
     try {
         const {
             firstName,
@@ -36,6 +38,7 @@ router.post('/', async (req, res) => {
         await registration.save();
         res.status(201).json(registration);
     } catch (error) {
+        console.log(error);
         res.status(400).json({ error: error.message });
     }
 });

@@ -68,10 +68,14 @@ export default function RegisterStudent() {
         }
       });
       if (photo) formData.append("photo", photo);
+      console.log(formData);
 
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/registration/`, {
         method: "POST",
-        body: formData,
+        body: JSON.stringify(formData),
+        headers: {
+          'Content-Type': 'application/json'
+        }
       });
       if (res.ok) {
         setStatus("Student registered successfully!");

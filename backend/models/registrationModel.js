@@ -48,10 +48,6 @@ const studentRegistrationSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
-    grade: {
-        type: String,
-        required: true
-    },
     registrationDate: {
         type: Date,
         default: Date.now
