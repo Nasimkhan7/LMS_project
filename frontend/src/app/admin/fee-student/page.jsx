@@ -47,7 +47,7 @@ export default function FeeStudentPage() {
       formData.append("status", form.status);
       if (form.photo) formData.append("photo", form.photo);
 
-      const res = await fetch("/api/fees", {
+      const res = await fetch("/fee", {
         method: "POST",
         body: formData,
       });
