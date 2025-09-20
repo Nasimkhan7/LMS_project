@@ -19,7 +19,7 @@ app.use('/registration', registrationRouter);
 app.use('/user', userRouter);
 
 // Connect to MongoDB
-// require('./connection');
+require('./connection');
 
 //routers
 // app.get('/', (req, res) => {

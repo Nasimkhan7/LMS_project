@@ -11,7 +11,7 @@ export default function ManageStudentPage() {
     // Fetch students from your API
     const fetchStudents = async () => {
       try {
-        const res = await fetch("/api/students");
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/registration`);
         if (res.ok) {
           const data = await res.json();
           setStudents(data);

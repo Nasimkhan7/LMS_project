@@ -49,6 +49,7 @@ router.get('/', async (req, res) => {
         const registrations = await Registration.find();
         res.json(registrations);
     } catch (error) {
+        console.log(error);
         res.status(500).json({ error: error.message });
     }
 });

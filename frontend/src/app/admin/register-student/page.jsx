@@ -68,11 +68,11 @@ export default function RegisterStudent() {
         }
       });
       if (photo) formData.append("photo", photo);
-      console.log(formData);
+      console.log(values);
 
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/registration/`, {
         method: "POST",
-        body: JSON.stringify(formData),
+        body: JSON.stringify(values),
         headers: {
           'Content-Type': 'application/json'
         }
@@ -127,7 +127,7 @@ export default function RegisterStudent() {
         <div className="mt-12">
           <Formik
             initialValues={initialState}
-            validationSchema={validationSchema}
+            // validationSchema={validationSchema}
             onSubmit={handleSubmit}
           >
             {({ values, handleChange, handleSubmit }) => (
