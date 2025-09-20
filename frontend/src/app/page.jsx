@@ -4,6 +4,21 @@ import React, { useState } from 'react'
 const Home = () => {
   const [dark, setDark] = useState(false);
 
+  const notifications = [
+    {
+      id: 1,
+      title: "Welcome to LMS Portal",
+      message: "Explore the new features and updates.",
+      expiresAt: new Date(new Date().getTime() + 24 * 60 * 60 * 1000).toISOString(), // 1 day from now
+    },
+    {
+      id: 2,
+      title: "System Maintenance",
+      message: "Scheduled maintenance on Sunday at 2:00 AM.",
+      expiresAt: new Date(new Date().getTime() + 48 * 60 * 60 * 1000).toISOString(), // 2 days from now
+    },
+  ];
+
   return (
     <div className={`${dark ? "dark" : ""}`}>
       <div className="min-h-screen bg-gradient-to-br from-blue-100 to-blue-300 dark:from-gray-900 dark:to-gray-800 flex flex-col transition-colors duration-300">
@@ -47,21 +62,30 @@ const Home = () => {
           <div className="max-w-5xl mx-auto px-4">
             <h2 className="text-3xl font-bold text-center text-blue-700 dark:text-yellow-400 mb-10">Our Services</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="bg-white dark:bg-gray-900 rounded-lg shadow p-8 flex flex-col items-center transition">
+              <a
+                href="/student-dashboard"
+                className="bg-white dark:bg-gray-900 rounded-lg shadow p-8 flex flex-col items-center transition cursor-pointer hover:scale-105"
+              >
                 <span className="text-blue-600 dark:text-yellow-400 text-4xl mb-4">🎓</span>
                 <h3 className="font-bold text-xl mb-2 text-blue-700 dark:text-yellow-400">Student Portal</h3>
                 <p className="text-gray-600 dark:text-gray-300 text-center">View syllabus, attendance, notices, and more.</p>
-              </div>
-              <div className="bg-white dark:bg-gray-900 rounded-lg shadow p-8 flex flex-col items-center transition">
+              </a>
+              <a
+                href="/admin"
+                className="bg-white dark:bg-gray-900 rounded-lg shadow p-8 flex flex-col items-center transition cursor-pointer hover:scale-105"
+              >
                 <span className="text-green-600 dark:text-green-400 text-4xl mb-4">👩‍🏫</span>
                 <h3 className="font-bold text-xl mb-2 text-green-700 dark:text-green-400">Admin Portal</h3>
                 <p className="text-gray-600 dark:text-gray-300 text-center">Manage students, teachers, classes, and reports.</p>
-              </div>
-              <div className="bg-white dark:bg-gray-900 rounded-lg shadow p-8 flex flex-col items-center transition">
+              </a>
+              <a
+                href="/super-admin"
+                className="bg-white dark:bg-gray-900 rounded-lg shadow p-8 flex flex-col items-center transition cursor-pointer hover:scale-105"
+              >
                 <span className="text-purple-600 dark:text-purple-400 text-4xl mb-4">🛡️</span>
                 <h3 className="font-bold text-xl mb-2 text-purple-700 dark:text-purple-400">Super Admin</h3>
                 <p className="text-gray-600 dark:text-gray-300 text-center">Control all features and permissions.</p>
-              </div>
+              </a>
             </div>
           </div>
         </section>
@@ -92,6 +116,18 @@ const Home = () => {
             </div>
           </div>
         </section>
+        {/* Notifications */}
+        <div className="max-w-3xl mx-auto px-4 mb-4">
+          {notifications
+            .filter(n => new Date() < new Date(n.expiresAt))
+            .map(n => (
+              <div key={n.id} className="bg-yellow-100 border-l-4 border-yellow-500 p-4 mb-2">
+                <div className="font-bold">{n.title}</div>
+                <div>{n.message}</div>
+                <div className="text-xs text-gray-500">Expires: {n.expiresAt}</div>
+              </div>
+            ))}
+        </div>
         {/* Footer */}
         <footer className="bg-blue-600 dark:bg-gray-900 text-blue-100 dark:text-gray-300 py-4 text-center mt-10 rounded-t-xl shadow transition-colors duration-300">
           &copy; {new Date().getFullYear()} LMS Portal. All rights reserved.
