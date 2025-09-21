@@ -3,7 +3,7 @@ import React, { useState } from "react";
 
 export default function FeeStudentPage() {
   const [form, setForm] = useState({
-    studentId: "",
+    enrollNum: "",
     totalFee: "",
     paidFee: "",
     dueDate: "",
@@ -39,7 +39,7 @@ export default function FeeStudentPage() {
     setError("");
     try {
       const formData = new FormData();
-      formData.append("studentId", form.studentId);
+      formData.append("enrollNum", form.enrollNum);
       formData.append("totalFee", form.totalFee);
       formData.append("paidFee", form.paidFee);
       formData.append("balanceFee", balanceFee);
@@ -54,7 +54,7 @@ export default function FeeStudentPage() {
       if (res.ok) {
         setStatus("Fee record added successfully!");
         setForm({
-          studentId: "",
+          enrollNum: "",
           totalFee: "",
           paidFee: "",
           dueDate: "",
@@ -115,17 +115,17 @@ export default function FeeStudentPage() {
           )}
         </div>
         <div className="mb-4">
-          <label className={`block mb-2 ${dark ? "text-gray-200" : "text-gray-700"}`} htmlFor="studentId">
-            Student ID
+          <label className={`block mb-2 ${dark ? "text-gray-200" : "text-gray-700"}`} htmlFor="enrollNum">
+            Enrollment Number
           </label>
           <input
-            name="studentId"
-            id="studentId"
-            value={form.studentId}
+            name="enrollNum"
+            id="enrollNum"
+            value={form.enrollNum}
             onChange={handleChange}
             required
             className={`w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 bg-inherit ${dark ? "text-white" : "text-gray-900"}`}
-            placeholder="Enter student ID"
+            placeholder="Enter enrollment number"
           />
         </div>
         <div className="mb-4">

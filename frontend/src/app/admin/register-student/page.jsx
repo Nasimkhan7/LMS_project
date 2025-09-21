@@ -7,6 +7,7 @@ const initialState = {
   firstName: "",
   lastName: "",
   dateOfBirth: "",
+  enrollNum: "",
   gender: "",
   email: "",
   phone: "",
@@ -25,6 +26,7 @@ const validationSchema = Yup.object({
   firstName: Yup.string().required("Required"),
   lastName: Yup.string().required("Required"),
   dateOfBirth: Yup.date().required("Required"),
+  enrollNum: Yup.string().required("Required"),
   gender: Yup.string().oneOf(["Male", "Female", "Other"]).required("Required"),
   email: Yup.string().email("Invalid email").required("Required"),
   phone: Yup.string().matches(/^[0-9]{10}$/, "Enter valid 10 digit phone").required("Required"),
@@ -137,6 +139,7 @@ export default function RegisterStudent() {
                     <InputField label="First Name" name="firstName" placeholder="Enter first name" />
                     <InputField label="Last Name" name="lastName" placeholder="Enter last name" />
                     <InputField label="Date of Birth" name="dateOfBirth" type="date" />
+                    <InputField label="Enrollment Number" name="enrollNum" placeholder="Enter enrollment number" />
                     <div>
                       <label htmlFor="gender" className="block text-sm font-medium text-gray-700 mb-1">
                         Gender

@@ -15,6 +15,10 @@ const studentRegistrationSchema = new mongoose.Schema({
         type: Date,
         required: true
     },
+    enrollNum: {
+        type: String,
+        required: true,
+    },
     gender: {
         type: String,
         enum: ['Male', 'Female', 'Other'],

@@ -18,6 +18,7 @@ router.post('/', async (req, res) => {
             parentName,
             parentContact,
             grade,
+            enrollNum,
             // registrationDate and status are optional
         } = req.body;
 
@@ -32,6 +33,7 @@ router.post('/', async (req, res) => {
             parentName,
             parentContact,
             grade,
+            enrollNum,
             // registrationDate and status will be set by default
         });
 
