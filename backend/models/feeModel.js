@@ -1,36 +1,35 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 
 const feeSchema = new mongoose.Schema({
-    student: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'StudentRegistration',
-        required: true
-    },
-    amount: {
-        type: Number,
-        required: true
-    },
-    dueDate: {
-        type: Date,
-        required: true
-    },
-    paidDate: {
-        type: Date
-    },
-    status: {
-        type: String,
-        enum: ['Pending', 'Paid', 'Overdue'],
-        default: 'Pending'
-    },
-    paymentMethod: {
-        type: String,
-        enum: ['Cash', 'Card', 'Online', 'Cheque'],
-        default: 'Cash'
-    },
-    remarks: {
-        type: String,
-        trim: true
-    }
+  studentId: {
+    type: String,
+    required: true,
+  },
+  totalFee: {
+    type: Number,
+    required: true,
+  },
+  paidFee: {
+    type: Number,
+    required: true,
+  },
+  balanceFee: {
+    type: Number,
+    required: true,
+  },
+  dueDate: {
+    type: Date,
+    required: true,
+  },
+  status: {
+    type: String,
+    enum: ["Paid", "Unpaid", "Partial"],
+    required: true,
+  },
+  photo: {
+    type: String, // yahan image ka path save hoga
+  },
 }, { timestamps: true });
 
-module.exports = mongoose.model('Fee', feeSchema);
+const Fee = mongoose.model("Fee", feeSchema);
+export default Fee;
