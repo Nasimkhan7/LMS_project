@@ -38,19 +38,23 @@ export default function FeeStudentPage() {
     setStatus("");
     setError("");
     try {
-      const formData = new FormData();
-      formData.append("enrollNum", form.enrollNum);
-      formData.append("totalFee", form.totalFee);
-      formData.append("paidFee", form.paidFee);
-      formData.append("balanceFee", balanceFee);
-      formData.append("dueDate", form.dueDate);
-      formData.append("status", form.status);
-      if (form.photo) formData.append("photo", form.photo);
+      const feeData = {
+        enrollNum: form.enrollNum,
+        totalFee: Number(form.totalFee),
+        paidFee: Number(form.paidFee),
+        balanceFee: Number(balanceFee),
+        dueDate: form.dueDate,
+        status: form.status,
+      };
 
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/registration/fee`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/fee`, {
         method: "POST",
-        body: formData,
+        body: JSON.stringify(feeData),
+        headers: {
+          'Content-Type': 'application/json'
+        }
       });
+
       if (res.ok) {
         setStatus("Fee record added successfully!");
         setForm({
@@ -64,157 +68,247 @@ export default function FeeStudentPage() {
         setPreview(null);
       } else {
         const data = await res.json();
-        setError(data.message || "Failed to add fee record.");
+        setError(data.error || "Failed to add fee record.");
       }
-    } catch {
-      setError("Network error.");
+    } catch (err) {
+      setError("Network error. Please try again.");
     }
   };
 
   return (
-    <div className={`${dark ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900"} min-h-screen flex items-center justify-center transition-colors duration-500`}>
-      <form
-        onSubmit={handleSubmit}
-        className={`${dark ? "bg-gray-800 text-white" : "bg-white text-gray-900"} shadow-2xl rounded-xl p-8 w-full max-w-lg transition-colors duration-500`}
-      >
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-center flex-1">
-            Add Student Fee
-          </h2>
-          <button
-            type="button"
-            onClick={() => setDark((d) => !d)}
-            className={`ml-4 px-3 py-1 rounded border transition-colors duration-300
-              ${dark
-                ? "bg-gradient-to-r from-gray-700 via-gray-900 to-black text-yellow-300 border-yellow-400 shadow-lg"
-                : "bg-gradient-to-r from-gray-100 via-white to-gray-200 text-gray-700 border-gray-300 shadow"
-              } hover:scale-105`}
-            aria-label="Toggle dark mode"
-          >
-            {dark ? "🌙 Dark" : "☀️ Light"}
-          </button>
+    <div className={`${dark ? "dark" : ""}`}>
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-100 to-purple-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 transition-all duration-500 py-8 px-4">
+        <div className="max-w-2xl mx-auto">
+          {/* Header */}
+          <div className="text-center mb-8">
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <div className="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center shadow-lg">
+                <span className="text-white text-2xl">💰</span>
+              </div>
+              <h1 className="text-3xl font-bold text-gray-800 dark:text-white">Student Fee Management</h1>
+              <button
+                type="button"
+                onClick={() => setDark(!dark)}
+                className="ml-4 p-2 rounded-lg bg-white/20 dark:bg-gray-700/50 backdrop-blur-sm border border-white/30 dark:border-gray-600 hover:bg-white/30 dark:hover:bg-gray-600/50 transition-all duration-200"
+                aria-label="Toggle dark mode"
+              >
+                <span className="text-xl">{dark ? "🌙" : "☀️"}</span>
+              </button>
+            </div>
+            <p className="text-gray-600 dark:text-gray-300">Add and manage student fee records</p>
+          </div>
+
+          {/* Main Form Card */}
+          <div className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md rounded-2xl shadow-2xl border border-white/20 dark:border-gray-700/50 overflow-hidden">
+            <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-6">
+              <h2 className="text-xl font-semibold text-white flex items-center gap-2">
+                <span className="text-2xl">📝</span>
+                Add New Fee Record
+              </h2>
+            </div>
+
+            <form onSubmit={handleSubmit} className="p-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Photo Upload */}
+                <div className="md:col-span-2 flex flex-col items-center mb-6">
+                  <div className="relative">
+                    <div className="w-32 h-32 rounded-full border-4 border-blue-200 dark:border-gray-600 overflow-hidden bg-gray-100 dark:bg-gray-700 flex items-center justify-center">
+                      {preview ? (
+                        <img
+                          src={preview}
+                          alt="Student Preview"
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <span className="text-gray-400 text-4xl">👤</span>
+                      )
+                      }
+                    </div>
+                    <label
+                      htmlFor="photo"
+                      className="absolute bottom-0 right-0 bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-full cursor-pointer transition-colors shadow-lg"
+                    >
+                      <span className="text-sm">📷</span>
+                    </label>
+                  </div>
+                  <input
+                    name="photo"
+                    id="photo"
+                    type="file"
+                    accept="image/*"
+                    onChange={handleChange}
+                    className="hidden"
+                  />
+                  <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">Upload student photo (optional)</p>
+                </div>
+
+                {/* Enrollment Number */}
+                <div className="md:col-span-2">
+                  <label className="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2" htmlFor="enrollNum">
+                    Enrollment Number *
+                  </label>
+                  <input
+                    name="enrollNum"
+                    id="enrollNum"
+                    value={form.enrollNum}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white/50 dark:bg-gray-800/50 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 transition-all"
+                    placeholder="Enter student enrollment number"
+                  />
+                </div>
+
+                {/* Total Fee */}
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2" htmlFor="totalFee">
+                    Total Fee Amount *
+                  </label>
+                  <div className="relative">
+                    <span className="absolute left-3 top-3 text-gray-500 dark:text-gray-400">₹</span>
+                    <input
+                      name="totalFee"
+                      id="totalFee"
+                      type="number"
+                      value={form.totalFee}
+                      onChange={handleChange}
+                      required
+                      min="0"
+                      className="w-full pl-8 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white/50 dark:bg-gray-800/50 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 transition-all"
+                      placeholder="0.00"
+                    />
+                  </div>
+                </div>
+
+                {/* Paid Fee */}
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2" htmlFor="paidFee">
+                    Paid Amount *
+                  </label>
+                  <div className="relative">
+                    <span className="absolute left-3 top-3 text-gray-500 dark:text-gray-400">₹</span>
+                    <input
+                      name="paidFee"
+                      id="paidFee"
+                      type="number"
+                      value={form.paidFee}
+                      onChange={handleChange}
+                      required
+                      min="0"
+                      className="w-full pl-8 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white/50 dark:bg-gray-800/50 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 transition-all"
+                      placeholder="0.00"
+                    />
+                  </div>
+                </div>
+
+                {/* Balance Fee (Read-only) */}
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2" htmlFor="balanceFee">
+                    Balance Amount
+                  </label>
+                  <div className="relative">
+                    <span className="absolute left-3 top-3 text-gray-500 dark:text-gray-400">₹</span>
+                    <input
+                      name="balanceFee"
+                      id="balanceFee"
+                      type="number"
+                      value={balanceFee}
+                      readOnly
+                      className="w-full pl-8 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 cursor-not-allowed"
+                      placeholder="0.00"
+                    />
+                  </div>
+                </div>
+
+                {/* Due Date */}
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2" htmlFor="dueDate">
+                    Due Date *
+                  </label>
+                  <input
+                    name="dueDate"
+                    id="dueDate"
+                    type="date"
+                    value={form.dueDate}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white/50 dark:bg-gray-800/50 text-gray-900 dark:text-white transition-all"
+                  />
+                </div>
+
+                {/* Status */}
+                <div className="md:col-span-2">
+                  <label className="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2" htmlFor="status">
+                    Payment Status *
+                  </label>
+                  <select
+                    name="status"
+                    id="status"
+                    value={form.status}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white/50 dark:bg-gray-800/50 text-gray-900 dark:text-white transition-all"
+                  >
+                    <option value="">Select payment status</option>
+                    <option value="Paid">✅ Paid</option>
+                    <option value="Unpaid">❌ Unpaid</option>
+                    <option value="Partial">⚠️ Partial</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Submit Button */}
+              <div className="mt-8">
+                <button
+                  type="submit"
+                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-4 px-6 rounded-lg transition-all duration-200 transform hover:scale-[1.02] focus:outline-none focus:ring-4 focus:ring-blue-500/50 shadow-lg"
+                >
+                  <span className="flex items-center justify-center gap-2">
+                    <span className="text-xl">💾</span>
+                    Add Fee Record
+                  </span>
+                </button>
+              </div>
+
+              {/* Status Messages */}
+              {status && (
+                <div className="mt-6 p-4 bg-green-100 dark:bg-green-900/30 border border-green-400 dark:border-green-600 rounded-lg">
+                  <p className="text-green-700 dark:text-green-300 text-center flex items-center justify-center gap-2">
+                    <span className="text-xl">✅</span>
+                    {status}
+                  </p>
+                </div>
+              )}
+              
+              {error && (
+                <div className="mt-6 p-4 bg-red-100 dark:bg-red-900/30 border border-red-400 dark:border-red-600 rounded-lg">
+                  <p className="text-red-700 dark:text-red-300 text-center flex items-center justify-center gap-2">
+                    <span className="text-xl">❌</span>
+                    {error}
+                  </p>
+                </div>
+              )}
+            </form>
+          </div>
+
+          {/* Navigation Links */}
+          <div className="mt-8 flex justify-center gap-4">
+            <a
+              href="/admin"
+              className="px-6 py-3 bg-white/20 dark:bg-gray-700/50 backdrop-blur-sm border border-white/30 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-white/30 dark:hover:bg-gray-600/50 transition-all duration-200 flex items-center gap-2"
+            >
+              <span>⬅️</span>
+              Back to Admin
+            </a>
+            <a
+              href="/admin/view-fees"
+              className="px-6 py-3 bg-white/20 dark:bg-gray-700/50 backdrop-blur-sm border border-white/30 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-white/30 dark:hover:bg-gray-600/50 transition-all duration-200 flex items-center gap-2"
+            >
+              <span>👁️</span>
+              View All Fees
+            </a>
+          </div>
         </div>
-        <div className="mb-4 flex flex-col items-center">
-          <label className={`block mb-2 ${dark ? "text-gray-200" : "text-gray-700"}`} htmlFor="photo">
-            Student Photo
-          </label>
-          <input
-            name="photo"
-            id="photo"
-            type="file"
-            accept="image/*"
-            onChange={handleChange}
-            className={`w-full ${dark ? "text-gray-200" : "text-gray-700"}`}
-          />
-          {preview && (
-            <img
-              src={preview}
-              alt="Student Preview"
-              className="mt-2 w-24 h-24 object-cover rounded-full border shadow-lg"
-            />
-          )}
-        </div>
-        <div className="mb-4">
-          <label className={`block mb-2 ${dark ? "text-gray-200" : "text-gray-700"}`} htmlFor="enrollNum">
-            Enrollment Number
-          </label>
-          <input
-            name="enrollNum"
-            id="enrollNum"
-            value={form.enrollNum}
-            onChange={handleChange}
-            required
-            className={`w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 bg-inherit ${dark ? "text-white" : "text-gray-900"}`}
-            placeholder="Enter enrollment number"
-          />
-        </div>
-        <div className="mb-4">
-          <label className={`block mb-2 ${dark ? "text-gray-200" : "text-gray-700"}`} htmlFor="totalFee">
-            Total Fee
-          </label>
-          <input
-            name="totalFee"
-            id="totalFee"
-            type="number"
-            value={form.totalFee}
-            onChange={handleChange}
-            required
-            min="0"
-            className={`w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 bg-inherit ${dark ? "text-white" : "text-gray-900"}`}
-            placeholder="Enter total fee"
-          />
-        </div>
-        <div className="mb-4">
-          <label className={`block mb-2 ${dark ? "text-gray-200" : "text-gray-700"}`} htmlFor="paidFee">
-            Paid Fee
-          </label>
-          <input
-            name="paidFee"
-            id="paidFee"
-            type="number"
-            value={form.paidFee}
-            onChange={handleChange}
-            required
-            min="0"
-            className={`w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 bg-inherit ${dark ? "text-white" : "text-gray-900"}`}
-            placeholder="Enter paid fee"
-          />
-        </div>
-        <div className="mb-4">
-          <label className={`block mb-2 ${dark ? "text-gray-200" : "text-gray-700"}`} htmlFor="balanceFee">
-            Balance Fee
-          </label>
-          <input
-            name="balanceFee"
-            id="balanceFee"
-            type="number"
-            value={balanceFee}
-            readOnly
-            className={`w-full px-3 py-2 border rounded ${dark ? "bg-gray-700 text-white" : "bg-gray-100 text-gray-900"} focus:outline-none`}
-            placeholder="Balance fee"
-          />
-        </div>
-        <div className="mb-4">
-          <label className={`block mb-2 ${dark ? "text-gray-200" : "text-gray-700"}`} htmlFor="dueDate">
-            Due Date
-          </label>
-          <input
-            name="dueDate"
-            id="dueDate"
-            type="date"
-            value={form.dueDate}
-            onChange={handleChange}
-            required
-            className={`w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 bg-inherit ${dark ? "text-white" : "text-gray-900"}`}
-          />
-        </div>
-        <div className="mb-6">
-          <label className={`block mb-2 ${dark ? "text-gray-200" : "text-gray-700"}`} htmlFor="status">
-            Status
-          </label>
-          <select
-            name="status"
-            id="status"
-            value={form.status}
-            onChange={handleChange}
-            required
-            className={`w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 bg-inherit ${dark ? "text-white" : "text-gray-900"}`}
-          >
-            <option value="">Select status</option>
-            <option value="Paid">Paid</option>
-            <option value="Unpaid">Unpaid</option>
-            <option value="Partial">Partial</option>
-          </select>
-        </div>
-        <button
-          type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        >
-          Add Fee
-        </button>
-        {status && <p className="text-green-600 text-center mt-4">{status}</p>}
-        {error && <p className="text-red-600 text-center mt-4">{error}</p>}
-      </form>
+      </div>
     </div>
   );
 }

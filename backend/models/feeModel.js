@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require('mongoose');
 
 const feeSchema = new mongoose.Schema({
   studentId: {
@@ -31,5 +31,4 @@ const feeSchema = new mongoose.Schema({
   },
 }, { timestamps: true });
 
-const Fee = mongoose.model("Fee", feeSchema);
-export default Fee;
+module.exports = mongoose.model('Fee', feeSchema);
