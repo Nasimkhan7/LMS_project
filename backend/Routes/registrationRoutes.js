@@ -56,6 +56,28 @@ router.get('/', async (req, res) => {
     }
 });
 
+// Search registration by enrollment number
+router.get('/enrollment/:enrollNum', async (req, res) => {
+    try {
+        const { enrollNum } = req.params;
+        
+        if (!enrollNum) {
+            return res.status(400).json({ error: 'Enrollment number is required' });
+        }
+
+        const registration = await Registration.findOne({ enrollNum: enrollNum });
+        
+        if (!registration) {
+            return res.status(404).json({ error: 'Registration not found with this enrollment number' });
+        }
+        
+        res.json(registration);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
 // Get a registration by ID
 router.get('/:id', async (req, res) => {
     try {
