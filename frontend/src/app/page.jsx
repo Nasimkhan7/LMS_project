@@ -126,7 +126,7 @@ const Home = () => {
                 </div>
               </a>
               <a
-                href="/admin"
+                href="/admin/dashboard"
                 className="group bg-white dark:bg-gray-900 rounded-2xl shadow-lg p-8 transition-all duration-300 hover:shadow-2xl hover:scale-105 border border-gray-100 dark:border-gray-700"
               >
                 <div className="text-center">
