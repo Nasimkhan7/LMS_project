@@ -26,7 +26,7 @@ export default function ManageTeachersPage() {
   }, []);
 
   const handleAddTeacher = () => {
-    router.push("/admin/manage-teachers/register-teacher");
+    router.push("/admin/register-teacher");
   };
 
   const handleEditTeacher = (teacher) => {
