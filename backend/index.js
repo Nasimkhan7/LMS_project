@@ -2,6 +2,7 @@ const express = require('express');
 const feesRouter = require('./Routes/feeRoutes');
 const registrationRouter = require('./Routes/registrationRoutes');
 const userRouter = require('./Routes/userRouter');
+const teacherRoutes = require('./Routes/teacherRoutes');
 const cors = require('cors');
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(express.json()); // to parse JSON bodies
 app.use('/fee', feesRouter);
 app.use('/registration', registrationRouter);
 app.use('/user', userRouter);
+app.use('/teacher', teacherRoutes);
 
 // Connect to MongoDB
 require('./connection');

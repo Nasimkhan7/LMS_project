@@ -1,6 +1,7 @@
 'use client';
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import axios from 'axios';
 
 const subjects = [
   "Mathematics",
@@ -52,6 +53,7 @@ export default function RegisterTeacherPage() {
       phone: ""
     }
   });
+
   const [preview, setPreview] = useState(null);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -122,22 +124,61 @@ export default function RegisterTeacherPage() {
         }
       });
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/teachers`, {
-        method: 'POST',
-        body: formData
-      });
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/teachers`, 
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+          onUploadProgress: (progressEvent) => {
+            const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+            console.log('Upload Progress:', percentCompleted);
+          }
+        }
+      );
 
-      if (response.ok) {
+      if (response.status === 201) {
         setSuccess("Teacher registered successfully!");
+        // Clear form
+        setForm({
+          firstName: "",
+          lastName: "",
+          email: "",
+          phone: "",
+          dateOfBirth: "",
+          gender: "",
+          address: "",
+          qualification: "",
+          experience: "",
+          joiningDate: "",
+          salary: "",
+          photo: null,
+          subjects: [],
+          grades: [],
+          employeeId: "",
+          department: "",
+          emergencyContact: {
+            name: "",
+            relationship: "",
+            phone: ""
+          }
+        });
+        setPreview(null);
+        setCurrentStep(1);
+        
+        // Redirect after 2 seconds
         setTimeout(() => {
           router.push("/admin/manage-teachers");
         }, 2000);
-      } else {
-        const data = await response.json();
-        setError(data.error || "Failed to register teacher.");
       }
     } catch (err) {
-      setError("Network error. Please try again.");
+      console.error('Registration Error:', err);
+      setError(
+        err.response?.data?.error || 
+        err.response?.data?.message || 
+        "Failed to register teacher. Please try again."
+      );
     } finally {
       setLoading(false);
     }
@@ -170,8 +211,8 @@ export default function RegisterTeacherPage() {
               {[1, 2, 3].map((step) => (
                 <div key={step} className="flex items-center">
                   <div className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold ${currentStep >= step
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-gray-300 dark:bg-gray-600 text-gray-600 dark:text-gray-300'
+                    ? 'bg-blue-600 text-white'
+                    : 'bg-gray-300 dark:bg-gray-600 text-gray-600 dark:text-gray-300'
                     }`}>
                     {step}
                   </div>
