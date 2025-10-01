@@ -4,11 +4,11 @@ import { useRouter } from "next/navigation";
 
 const subjects = [
   "Mathematics",
-  "English", 
+  "English",
   "Science",
   "Social Studies",
   "History",
-  "Geography", 
+  "Geography",
   "Physics",
   "Chemistry",
   "Biology",
@@ -97,18 +97,18 @@ export default function RegisterTeacherPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!form.firstName || !form.lastName || !form.email || !form.phone) {
       setError("Please fill all required fields.");
       return;
     }
-    
+
     setError("");
     setLoading(true);
-    
+
     try {
       const formData = new FormData();
-      
+
       // Append all form fields
       Object.keys(form).forEach(key => {
         if (key === 'photo') {
@@ -169,17 +169,15 @@ export default function RegisterTeacherPage() {
             <div className="flex items-center justify-center space-x-4">
               {[1, 2, 3].map((step) => (
                 <div key={step} className="flex items-center">
-                  <div className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold ${
-                    currentStep >= step 
-                      ? 'bg-blue-600 text-white' 
+                  <div className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold ${currentStep >= step
+                      ? 'bg-blue-600 text-white'
                       : 'bg-gray-300 dark:bg-gray-600 text-gray-600 dark:text-gray-300'
-                  }`}>
+                    }`}>
                     {step}
                   </div>
                   {step < 3 && (
-                    <div className={`w-12 h-1 ${
-                      currentStep > step ? 'bg-blue-600' : 'bg-gray-300 dark:bg-gray-600'
-                    }`} />
+                    <div className={`w-12 h-1 ${currentStep > step ? 'bg-blue-600' : 'bg-gray-300 dark:bg-gray-600'
+                      }`} />
                   )}
                 </div>
               ))}
@@ -201,7 +199,7 @@ export default function RegisterTeacherPage() {
                     <span className="text-2xl">👤</span>
                     Personal Information
                   </h2>
-                  
+
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <label className="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2">
@@ -341,7 +339,7 @@ export default function RegisterTeacherPage() {
                     <span className="text-2xl">💼</span>
                     Professional Information
                   </h2>
-                  
+
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <label className="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2">
@@ -439,7 +437,7 @@ export default function RegisterTeacherPage() {
                     <span className="text-2xl">📚</span>
                     Teaching Subjects & Emergency Contact
                   </h2>
-                  
+
                   {/* Subjects */}
                   <div className="mb-6">
                     <label className="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2">
@@ -540,7 +538,7 @@ export default function RegisterTeacherPage() {
                 >
                   Previous
                 </button>
-                
+
                 {currentStep < 3 ? (
                   <button
                     type="button"
