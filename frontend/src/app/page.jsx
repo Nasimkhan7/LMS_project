@@ -112,7 +112,8 @@ const Home = () => {
             <p className="text-gray-600 dark:text-gray-300 text-center mb-12 max-w-2xl mx-auto">
               Discover powerful tools designed to enhance your educational experience
             </p>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+              {/* Student Portal */}
               <a
                 href="/student-dashboard"
                 className="group bg-white dark:bg-gray-900 rounded-2xl shadow-lg p-8 transition-all duration-300 hover:shadow-2xl hover:scale-105 border border-gray-100 dark:border-gray-700"
@@ -125,6 +126,8 @@ const Home = () => {
                   <p className="text-gray-600 dark:text-gray-300">Access syllabus, attendance, assignments, and academic progress tracking.</p>
                 </div>
               </a>
+
+              {/* Admin Portal */}
               <a
                 href="/admin/dashboard"
                 className="group bg-white dark:bg-gray-900 rounded-2xl shadow-lg p-8 transition-all duration-300 hover:shadow-2xl hover:scale-105 border border-gray-100 dark:border-gray-700"
@@ -137,6 +140,8 @@ const Home = () => {
                   <p className="text-gray-600 dark:text-gray-300">Manage students, teachers, classes, schedules, and generate comprehensive reports.</p>
                 </div>
               </a>
+
+              {/* Super Admin Portal */}
               <a
                 href="/super-admin"
                 className="group bg-white dark:bg-gray-900 rounded-2xl shadow-lg p-8 transition-all duration-300 hover:shadow-2xl hover:scale-105 border border-gray-100 dark:border-gray-700"
@@ -147,6 +152,20 @@ const Home = () => {
                   </div>
                   <h3 className="font-bold text-xl mb-3 text-gray-800 dark:text-white">Super Admin</h3>
                   <p className="text-gray-600 dark:text-gray-300">Complete system control with advanced permissions and analytics.</p>
+                </div>
+              </a>
+
+              {/* Teacher Portal */}
+              <a
+                href="/teachers"
+                className="group bg-white dark:bg-gray-900 rounded-2xl shadow-lg p-8 transition-all duration-300 hover:shadow-2xl hover:scale-105 border border-gray-100 dark:border-gray-700"
+              >
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-yellow-100 dark:bg-yellow-900/50 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+                    <span className="text-yellow-600 dark:text-yellow-400 text-3xl">📘</span>
+                  </div>
+                  <h3 className="font-bold text-xl mb-3 text-gray-800 dark:text-white">Teacher Portal</h3>
+                  <p className="text-gray-600 dark:text-gray-300">Manage classes, assignments, and interact with students seamlessly.</p>
                 </div>
               </a>
             </div>

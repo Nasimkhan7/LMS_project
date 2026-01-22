@@ -46,6 +46,18 @@ const studentData = {
     { subject: "History", marks: 88 },
     { subject: "Geography", marks: 92 },
   ],
+  courseSchedule: [
+    { day: "Monday", subject: "Mathematics", time: "10:00 AM - 11:00 AM" },
+    { day: "Monday", subject: "Science", time: "11:15 AM - 12:15 PM" },
+    { day: "Tuesday", subject: "English", time: "10:00 AM - 11:00 AM" },
+    { day: "Tuesday", subject: "History", time: "11:15 AM - 12:15 PM" },
+    { day: "Wednesday", subject: "Geography", time: "10:00 AM - 11:00 AM" },
+    { day: "Wednesday", subject: "Mathematics", time: "11:15 AM - 12:15 PM" },
+    { day: "Thursday", subject: "Science", time: "10:00 AM - 11:00 AM" },
+    { day: "Thursday", subject: "English", time: "11:15 AM - 12:15 PM" },
+    { day: "Friday", subject: "History", time: "10:00 AM - 11:00 AM" },
+    { day: "Friday", subject: "Geography", time: "11:15 AM - 12:15 PM" },
+  ],
 };
 
 // Exam Results Chart Data
@@ -103,6 +115,15 @@ export default function StudentDashboardPage() {
             } transition`}
           >
             Attendance
+          </button>
+
+          <button
+            onClick={() => setActiveSection("Course-schedual")}
+            className={`w-full text-left px-4 py-2 rounded-lg ${
+              activeSection === "Course-schedual" ? "bg-blue-100 dark:bg-blue-700 text-blue-700 dark:text-white" : "text-gray-700 dark:text-gray-200 hover:bg-blue-100 dark:hover:bg-blue-700"
+            } transition`}
+          >
+            Course-schedual
           </button>
           <button
             onClick={() => setActiveSection("examResults")}
@@ -221,6 +242,30 @@ export default function StudentDashboardPage() {
                 Print Result
               </button>
             </div>
+          </div>
+        )}
+
+        {activeSection === "Course-schedual" && (
+          <div>
+            <h1 className="text-2xl font-bold mb-6 text-blue-700 dark:text-blue-300">Course Schedule</h1>
+            <table className="min-w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg">
+              <thead>
+                <tr>
+                  <th className="px-4 py-2 text-left text-gray-700 dark:text-gray-200 border-b dark:border-gray-700">Day</th>
+                  <th className="px-4 py-2 text-left text-gray-700 dark:text-gray-200 border-b dark:border-gray-700">Subject</th>
+                  <th className="px-4 py-2 text-left text-gray-700 dark:text-gray-200 border-b dark:border-gray-700">Time</th>
+                </tr>
+              </thead>
+              <tbody>
+                {studentData.courseSchedule.map((schedule, index) => (
+                  <tr key={index}>
+                    <td className="px-4 py-2 text-gray-700 dark:text-gray-200 border-b dark:border-gray-700">{schedule.day}</td>
+                    <td className="px-4 py-2 text-gray-700 dark:text-gray-200 border-b dark:border-gray-700">{schedule.subject}</td>
+                    <td className="px-4 py-2 text-gray-700 dark:text-gray-200 border-b dark:border-gray-700">{schedule.time}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         )}
       </main>
